@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dsdnjutg73e2w"]
+[gd_scene load_steps=17 format=3 uid="uid://dsdnjutg73e2w"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_83xxg"]
 [ext_resource type="Texture2D" uid="uid://d2gay4q4ib48q" path="res://assets/player/player.png" id="1_n6bvm"]
 [ext_resource type="PackedScene" uid="uid://dk1nma2djr7fs" path="res://scenes/camera/player_camera.tscn" id="3_xwmv8"]
+[ext_resource type="PackedScene" uid="uid://bww8opx6fy745" path="res://scenes/shooter/shooter.tscn" id="4_qcvov"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y5k20"]
 atlas = ExtResource("1_n6bvm")
@@ -125,3 +126,5 @@ text = "adfadfa
 fdgsh
 fgsdfsf
 46546"
+
+[node name="Shooter" parent="." instance=ExtResource("4_qcvov")]

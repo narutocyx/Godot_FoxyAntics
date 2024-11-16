@@ -13,6 +13,7 @@ var _state: PlayerState = PlayerState.IDLE
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var debug_label: Label = $DebugLabel
+@onready var shooter: Shooter = $Shooter
 
 func _ready() -> void:
 	pass
@@ -25,7 +26,17 @@ func _process(delta: float) -> void:
 	update_player_state()
 	update_debug_label()
 	
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
+	
 #input
+func shoot() -> void:
+	if animated_sprite_2d.flip_h == false:
+		shooter.shoot(Vector2.RIGHT)
+	else:
+		shooter.shoot(Vector2.LEFT)
+
+
 func get_input() -> void:
 	if Input.is_action_pressed("move_left"):
 		velocity.x = -RUN_SPEED
