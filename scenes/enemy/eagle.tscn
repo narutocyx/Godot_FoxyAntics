@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://e3mcp5apfg8x"]
+
+[ext_resource type="PackedScene" uid="uid://qua4svvdts5n" path="res://scenes/enemy/enemy_base.tscn" id="1_maesx"]
+[ext_resource type="Script" path="res://scenes/enemy/eagle.gd" id="2_nv5dd"]
+[ext_resource type="Texture2D" uid="uid://dmx4migt7xvgw" path="res://assets/enemies/eagle/eagle-attack.png" id="2_vkm4n"]
+[ext_resource type="PackedScene" uid="uid://bww8opx6fy745" path="res://scenes/shooter/shooter.tscn" id="4_hnxyr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7odv"]
+atlas = ExtResource("2_vkm4n")
+region = Rect2(0, 0, 40, 41)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_at22r"]
+atlas = ExtResource("2_vkm4n")
+region = Rect2(40, 0, 40, 41)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkprg"]
+atlas = ExtResource("2_vkm4n")
+region = Rect2(80, 0, 40, 41)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q13d8"]
+atlas = ExtResource("2_vkm4n")
+region = Rect2(120, 0, 40, 41)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mga05"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7odv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at22r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkprg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q13d8")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5s8b8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kuuw0"]
+radius = 2.0
+
+[node name="Eagle" instance=ExtResource("1_maesx")]
+collision_mask = 0
+script = ExtResource("2_nv5dd")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_mga05")
+animation = &"fly"
+frame_progress = 0.990222
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("CircleShape2D_5s8b8")
+
+[node name="CollisionShape2D" parent="." index="3"]
+shape = SubResource("CircleShape2D_kuuw0")
+
+[node name="DirectionTimer" type="Timer" parent="." index="4"]
+wait_time = 3.0
+
+[node name="PlayerDetector" type="RayCast2D" parent="." index="5"]
+target_position = Vector2(0, 300)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Shooter" parent="." index="6" instance=ExtResource("4_hnxyr")]
+speed = 150.0
+bullet_key = 3
+shoot_delay = 1.0
+
+[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
