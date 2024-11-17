@@ -32,6 +32,7 @@ func die() -> void:
 	hide()
 	
 	#pick up, sound and explosion
+	SignalManager.on_create_object.emit(global_position, Constants.ObjectType.EXPLOSION)
 	
 	queue_free()
 

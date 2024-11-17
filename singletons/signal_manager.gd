@@ -6,3 +6,7 @@ signal on_create_bullet(
 		life_span: float,
 		speed: float,
 		ob_type: Constants.ObjectType)
+
+signal on_create_object(
+		pos: Vector2,
+		ob_type: Constants.ObjectType)
