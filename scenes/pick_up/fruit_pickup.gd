@@ -4,6 +4,7 @@ extends Area2D
 
 const GRAVITY: float = 500
 const JUMP: float = -120
+const POINT: int = 5
 
 var start_y: float = 0
 var speed_y: float = JUMP
@@ -31,4 +32,9 @@ func kill_me() -> void:
 	queue_free()
 
 func _on_life_timer_timeout() -> void:
+	kill_me()
+
+
+func _on_area_entered(area: Area2D) -> void:
+	SignalManager.on_pickup_hit.emit(POINT)
 	kill_me()
