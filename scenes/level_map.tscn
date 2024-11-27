@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://bvjlyhubhtyno"]
+[gd_scene load_steps=13 format=4 uid="uid://bvjlyhubhtyno"]
 
 [ext_resource type="Script" path="res://scenes/level_map.gd" id="1_5p0jc"]
 [ext_resource type="Texture2D" uid="uid://bkx2sg72bsrea" path="res://assets/tiles/Terrain (16x16).png" id="1_chxrx"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bfwljumd6g6un" path="res://scenes/object_maker/object_maker.tscn" id="6_lqkqm"]
 [ext_resource type="PackedScene" uid="uid://e3mcp5apfg8x" path="res://scenes/enemy/eagle.tscn" id="7_ehsj3"]
 [ext_resource type="PackedScene" uid="uid://ct4dqgitphlm" path="res://scenes/ball_spikes/ball_spikes.tscn" id="8_1eg50"]
+[ext_resource type="PackedScene" uid="uid://btajxrl2vv7cx" path="res://scenes/floor_spikes/floor_spike.tscn" id="9_sstpg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_760q0"]
 texture = ExtResource("1_chxrx")
@@ -239,3 +240,9 @@ curve = SubResource("Curve2D_m5txm")
 position = Vector2(-27, -189)
 loop = false
 speed = 0.3
+
+[node name="Dangers" type="Node2D" parent="."]
+
+[node name="FloorSpike" parent="Dangers" instance=ExtResource("9_sstpg")]
+z_index = -1
+position = Vector2(9, -12)
