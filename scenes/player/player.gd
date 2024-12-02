@@ -4,6 +4,7 @@ class_name Player
 
 enum PlayerState {IDLE, RUN, JUMP, FALL, HURT}
 
+const FALLEN_OFF: float = 200.0
 const GRAVITY: float = 690.0
 const RUN_SPEED: float = 130.0
 const JUMP_VELOCITY: float = -260.0
@@ -20,11 +21,15 @@ var _state: PlayerState = PlayerState.IDLE
 @onready var hurt_timer: Timer = $HurtTimer
 
 var _invincible: bool = false
+var _lives: int = 5
 
 func _ready() -> void:
 	pass
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	
+	fallen_off()
+	
 	if is_on_floor() == false:
 		velocity.y += GRAVITY * delta
 	get_input()
@@ -96,11 +101,26 @@ func set_state(new_state: PlayerState) -> void:
 
 #debug
 func update_debug_label() -> void:
-	debug_label.text = "floor:%s invincible:%s\n%s\n%.f, %.f" % [
+	debug_label.text = "floor:%s invincible:%s\n%s\n%.f, %.f\n%d" % [
 		is_on_floor(), _invincible,
 		PlayerState.keys()[_state],
-		velocity.x, velocity.y
+		velocity.x, velocity.y, _lives
 	]
+
+func fallen_off() -> void:
+	if position.y < FALLEN_OFF:
+		return
+	reduce_lives(_lives)
+
+func reduce_lives(reduction: int) -> bool:
+	_lives -= reduction
+	SignalManager.on_player_lives_remain.emit(_lives)
+	if _lives <= 0:
+		SignalManager.game_over.emit()
+		set_physics_process(false)
+		print("Game Over")
+		return false
+	return true
 
 func go_invincible() -> void:
 	_invincible = true
@@ -110,6 +130,10 @@ func go_invincible() -> void:
 func apply_hit() -> void:
 	if _invincible == true:
 		return
+	
+	if reduce_lives(1) == false:
+		return
+		
 	set_state(PlayerState.HURT)
 	go_invincible()
 

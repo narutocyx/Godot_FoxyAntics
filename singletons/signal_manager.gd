@@ -12,3 +12,5 @@ signal on_create_object(
 		ob_type: Constants.ObjectType)
 
 signal on_pickup_hit(points: int)
+signal game_over
+signal on_player_lives_remain(lives: int)
