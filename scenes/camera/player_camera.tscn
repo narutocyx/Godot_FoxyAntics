@@ -1,9 +1,14 @@
-[gd_scene format=3 uid="uid://dk1nma2djr7fs"]
+[gd_scene load_steps=2 format=3 uid="uid://dk1nma2djr7fs"]
 
-[node name="Camera2D" type="Camera2D"]
+[ext_resource type="Script" path="res://scenes/camera/player_camera.gd" id="1_omv11"]
+
+[node name="PlayerCamera" type="Camera2D"]
 zoom = Vector2(4, 4)
 limit_bottom = 0
+script = ExtResource("1_omv11")
 
 [node name="ShakeTimer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
+
+[connection signal="timeout" from="ShakeTimer" to="." method="_on_shake_timer_timeout"]

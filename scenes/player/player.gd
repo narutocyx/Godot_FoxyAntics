@@ -114,9 +114,9 @@ func fallen_off() -> void:
 
 func reduce_lives(reduction: int) -> bool:
 	_lives -= reduction
-	SignalManager.on_player_lives_remain.emit(_lives)
+	SignalManager.on_player_hit.emit(_lives)
 	if _lives <= 0:
-		SignalManager.game_over.emit()
+		SignalManager.on_game_over.emit()
 		set_physics_process(false)
 		print("Game Over")
 		return false
