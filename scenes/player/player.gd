@@ -22,10 +22,13 @@ var _state: PlayerState = PlayerState.IDLE
 @onready var sound: AudioStreamPlayer2D = $Sound
 
 var _invincible: bool = false
-var _lives: int = 5
+var _lives: int = 3
 
 func _ready() -> void:
-	pass
+	call_deferred("late_setup")
+	
+func late_setup() -> void:
+	SignalManager.on_level_start.emit(_lives)
 
 func _physics_process(delta: float) -> void:
 	
@@ -126,6 +129,8 @@ func reduce_lives(reduction: int) -> bool:
 	if _lives <= 0:
 		SignalManager.on_game_over.emit()
 		set_physics_process(false)
+		animated_sprite_2d.stop()
+		invincible_player.stop()
 		print("Game Over")
 		return false
 	return true

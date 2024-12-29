@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://bvjlyhubhtyno"]
+[gd_scene load_steps=16 format=4 uid="uid://bvjlyhubhtyno"]
 
 [ext_resource type="Script" path="res://scenes/level_map.gd" id="1_5p0jc"]
 [ext_resource type="Texture2D" uid="uid://bkx2sg72bsrea" path="res://assets/tiles/Terrain (16x16).png" id="1_chxrx"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://e3mcp5apfg8x" path="res://scenes/enemy/eagle.tscn" id="7_ehsj3"]
 [ext_resource type="PackedScene" uid="uid://ct4dqgitphlm" path="res://scenes/ball_spikes/ball_spikes.tscn" id="8_1eg50"]
 [ext_resource type="PackedScene" uid="uid://btajxrl2vv7cx" path="res://scenes/floor_spikes/floor_spike.tscn" id="9_sstpg"]
+[ext_resource type="PackedScene" uid="uid://caxagl3y2st70" path="res://scenes/hud/hud.tscn" id="10_4466x"]
+[ext_resource type="Script" path="res://scenes/hud/hud.gd" id="11_dd68p"]
+[ext_resource type="PackedScene" uid="uid://4qu14q0moewf" path="res://scenes/moving_platform/moving_platform.tscn" id="12_t7tla"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_760q0"]
 texture = ExtResource("1_chxrx")
@@ -246,3 +249,17 @@ speed = 0.3
 [node name="FloorSpike" parent="Dangers" instance=ExtResource("9_sstpg")]
 z_index = -1
 position = Vector2(9, -12)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" parent="CanvasLayer" instance=ExtResource("10_4466x")]
+script = ExtResource("11_dd68p")
+
+[node name="MovingPlatform" type="Node2D" parent="."]
+
+[node name="P1" type="Marker2D" parent="MovingPlatform"]
+position = Vector2(-71, -37)
+
+[node name="MovingPlatform" parent="MovingPlatform" node_paths=PackedStringArray("destination") instance=ExtResource("12_t7tla")]
+position = Vector2(-183, -37)
+destination = NodePath("../P1")
